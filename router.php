@@ -1,5 +1,5 @@
 <?php
-require_once './app/controllers/task.controller.php';
+require_once './app/controllers/movie.controller.php';
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
@@ -9,15 +9,14 @@ if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 }
 
-$params = explode('/',$action);
+$params = explode('/', $action);
 
-// Inicializar controladores
+// Inicializar controlador de películas
 $movieController = new MovieController();
-$genreController = new GenreController();
 
 switch ($params[0]) {
     case 'genre':
-        $genreController->showGenres();
+        $movieController->showGenres(); // Llamar al método que muestra los géneros
         break;
     case 'movie':
         $movieController->showMovies();
@@ -29,6 +28,15 @@ switch ($params[0]) {
         } else {
             echo('404 Page not Found');
         }
+        break;
+    case 'addMovie':
+        $movieController->showAddMovieForm(); // Método para mostrar el formulario
+        break;
+    case 'insertMovie':
+        $movieController->addMovie(); // Inserta la película
+        break;
+    case 'deleteMovie':
+        $movieController->deleteMovie(); // Manejar la eliminación de la película
         break;
     default:
         echo('404 Page not Found');
