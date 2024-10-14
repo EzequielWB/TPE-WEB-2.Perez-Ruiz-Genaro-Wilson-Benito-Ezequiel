@@ -68,7 +68,7 @@ class addMovieController {
 
     function addMovieGenres() {
         $genresModel = new GenresModel();  // modelo de generos
-        $genres = $genresModel->getGenres(); // Obtén los generos desde la base de datos
+        $genres = $genresModel->getGenres(); // generos desde la base de datos
         $this->view->addMovieVisual($genres); // Pasa los generos a la vista
     }
 

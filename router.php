@@ -1,6 +1,7 @@
 <?php
 
-include_once 'app/controllers/movies.controller.php';
+require_once 'app/controllers/movies.controller.php';
+require_once 'app/controllers/auth.controller.php';
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
@@ -17,7 +18,8 @@ $params = explode('/',$action);
 $controllerGenres = new GenreController(); //llamo al controller de otro archivo
 $controllerMovie = new MovieController();
 $controllerAddMovie = new addMovieController();
-$controllerDeleteMovie = new MovieController();
+
+$userController = new AuthController();
 
 switch ($params[0]) {
 
@@ -48,7 +50,15 @@ switch ($params[0]) {
     break;
 
     case 'borrar':
-        $controllerDeleteMovie->deleteMovie($params[1]);
+        $controllerMovie->deleteMovie($params[1]);
     break;
+    case 'showLogin':
+        $controller = new AuthController();
+        $controller->showLogin();
+        break;
+    case 'login':
+        $controller = new AuthController();
+        $controller->login();
+        break;
 }
 ?>
