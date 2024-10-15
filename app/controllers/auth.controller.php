@@ -6,19 +6,19 @@ class AuthController {
     private $model;
     private $view;
 
-    public function __construct() {
+    function __construct() {
         $this->model = new UserModel();
         $this->view = new AuthView();
     }
 
-    public function showLogin() {
+    function showLogin() {
         // Muestro el formulario de login
         return $this->view->showLogin();
     }
 
-    public function login() {
+    function login() {
         if (!isset($_POST['usuario']) || empty($_POST['usuario'])) { //comprueba que haya user
-            return $this->view->showLogin('Falta completar el nombre de usuario');
+            return $this->view->showLogin('Falta completar el nombre de usuario'); //igual es innecesario porque el mismo boton te salta la advertencia
         }
     
         if (!isset($_POST['password']) || empty($_POST['password'])) {
@@ -28,7 +28,6 @@ class AuthController {
         $usuario = $_POST['usuario'];
         $password = $_POST['password'];
     
-        // Verificar que el usuario está en la base de datos
         $userFromDB = $this->model->getUser($usuario);
 
         // password: 123456
@@ -39,14 +38,13 @@ class AuthController {
             $_SESSION['ID_USER'] = $userFromDB->id;
             $_SESSION['usuario_USER'] = $userFromDB->usuario;
     
-            // Redirijo al home
             header('Location: ' . BASE_URL);
         } else {
             return $this->view->showLogin('Credenciales incorrectas');
         }
     }
 
-    public function logout() {
+    function logout() {
         session_start(); // Va a buscar la cookie
         session_destroy(); // Borra la cookie que se buscó
         header('Location: ' . BASE_URL);

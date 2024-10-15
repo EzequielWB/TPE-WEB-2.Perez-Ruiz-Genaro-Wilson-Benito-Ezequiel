@@ -79,13 +79,11 @@ switch ($params[0]) {
     break;
 
     case 'showLogin':
-        $controller = new AuthController();
-        $controller->showLogin();
+        $userController->showLogin();
         break;
 
     case 'login':
-        $controller = new AuthController();
-        $controller->login();
-        break;
+        $userController->login();
+        break; 
 }
 ?>

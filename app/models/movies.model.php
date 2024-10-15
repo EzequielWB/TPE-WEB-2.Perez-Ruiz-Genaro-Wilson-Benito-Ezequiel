@@ -55,7 +55,7 @@ class MoviesModel {
         return $query->fetch(PDO::FETCH_OBJ); 
     }
 
-    public function eraseMovie($movieId) {
+    function eraseMovie($movieId) {
         $db = $this->connect(); 
         $query = $db->prepare('DELETE FROM peliculas WHERE id = ?');
         $query->execute([$movieId]);
@@ -108,7 +108,7 @@ class AddGenreModel {
 class Model {
     protected $db;
 
-    public function __construct() {
+    function __construct() {
         $this->db = new PDO(
         "mysql:host=".MYSQL_HOST .
         ";dbname=".MYSQL_DB.";charset=utf8", 

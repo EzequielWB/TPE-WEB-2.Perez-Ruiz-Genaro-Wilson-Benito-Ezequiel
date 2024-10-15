@@ -1,7 +1,7 @@
 <?php
 
-include_once 'app/models/movies.model.php';
-include_once 'app/views/movies.view.php';
+require_once 'app/models/movies.model.php';
+require_once 'app/views/movies.view.php';
 
 //GENERO
 
