@@ -10,7 +10,7 @@ class GenreController {
     private $model;
     private $view;
 
-    function __construct() {
+    function __construct() { //el constructor es necesario ya que inicializamos el modelo y vista
         $this->model = new GenresModel();
         $this->view = new GenresView();
     }
@@ -20,6 +20,28 @@ class GenreController {
         $genres = $this->model->getGenres(); //entramos a model
 
         $this->view->listGenres($genres);//Actualizo vista
+    }
+}
+
+class AddGenreController {
+
+    private $model;
+    private $view;
+
+    function __construct() {
+        $this->model = new AddGenreModel();
+        $this->view = new AddGenreView();
+    }
+
+    function showAddGenreForm() {
+        $this->view->showForm();
+    }
+
+    function saveGenre() {
+        $nombre = $_POST['genero'];
+        $this->model->addGenre($nombre);
+
+        header('Location: ' . BASE_URL . 'principal');
     }
 }
 
@@ -58,15 +80,12 @@ class MovieController {
         $genresModel = new GenresModel(); 
         $genres = $genresModel->getGenres();
         require 'templates/layout/header.phtml'; 
-        require 'templates/form_edit_pelicula.phtml'; 
+        require 'templates/form_add_pelicula.phtml'; //mismo form
         require 'templates/layout/footer.phtml'; 
         
     }
 
     function saveEdit() {
-        if (!isset($_POST['nombre']) || !isset($_POST['director']) || !isset($_POST['descripcion']) || !isset($_POST['genero']) || !isset($_POST['id'])) {
-            die("Faltan datos");
-        }
 
         $id = $_POST['id']; 
         $nombre = $_POST['nombre'];
@@ -99,22 +118,6 @@ class addMovieController {
     }
 
     function addMovieControl() { // FUNCTION ES METODO
-
-        if (!isset($_POST['nombre']) || empty($_POST['nombre'])) {
-            return $this->view->showError('Falta completar el nombre');
-        }
-        
-        if (!isset($_POST['director']) || empty($_POST['director'])) {
-            return $this->view->showError('Falta completar el director');
-        }
-
-        if (!isset($_POST['descripcion']) || empty($_POST['descripcion'])) {
-            return $this->view->showError('Falta completar la descripción');
-        }
-
-        if (!isset($_POST['genero']) || empty($_POST['genero'])) {
-            return $this->view->showError('Falta seleccionar el genero');
-        }
 
         $nombre = $_POST['nombre'];
         $director = $_POST['director'];

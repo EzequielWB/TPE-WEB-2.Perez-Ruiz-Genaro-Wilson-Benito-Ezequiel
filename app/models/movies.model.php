@@ -88,6 +88,23 @@ class AddMovieModel{
 
 }
 
+class AddGenreModel {
+
+    private $db;
+
+    function connect() {
+        $db = new PDO('mysql:host=localhost;'.'dbname=catalogo_peliculas;charset=utf8', 'root', '');
+        return $db;
+    }
+
+    function addGenre($nombre) {
+        $db = $this->connect();
+        $query = $db->prepare('INSERT INTO generos (genero) VALUES (?)');
+        $query->execute([$nombre]);
+    }
+
+}
+
 class Model {
     protected $db;
 

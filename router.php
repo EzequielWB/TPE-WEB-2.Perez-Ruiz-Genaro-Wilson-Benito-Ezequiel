@@ -1,9 +1,13 @@
 <?php
 
+require_once 'libraries/response.php';
+require_once 'app/middlewares/session.auth.middleware.php';
 require_once 'app/controllers/movies.controller.php';
 require_once 'app/controllers/auth.controller.php';
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
+
+$response = new Response();
 
 // Obtener acción desde la URL (por defecto 'genre')
 $action = 'principal';
@@ -18,6 +22,7 @@ $params = explode('/',$action);
 $controllerGenres = new GenreController(); //llamo al controller de otro archivo
 $controllerMovie = new MovieController();
 $controllerAddMovie = new addMovieController();
+$controllerAddGenre = new AddGenreController();
 $userController = new AuthController();
 
 switch ($params[0]) {
@@ -40,7 +45,16 @@ switch ($params[0]) {
             $controllerMovie->showMovieDetails($movieId);
     break;
 
+    case 'añadirGenero':
+        $controllerAddGenre->showAddGenreForm();
+    break;
+
+    case 'guardarGenero':
+        $controllerAddGenre->saveGenre();
+    break;
+
     case 'añadir':
+        sessionAuthMiddleware($response); //usando esto hacemos que sea necesario un login
         $controllerAddMovie->addMovieGenres();  
     break;
 
@@ -49,10 +63,13 @@ switch ($params[0]) {
     break;
 
     case 'borrar':
-        $controllerMovie->deleteMovie($params[1]);
-    break;
+        if (sessionAuthMiddleware($response)) {
+            $controllerMovie->deleteMovie($params[1]);
+        }
+        break;
 
     case 'editar':
+        sessionAuthMiddleware($response);
         $movieId = $params[1]; 
         $controllerMovie->showEdit($movieId);
     break;

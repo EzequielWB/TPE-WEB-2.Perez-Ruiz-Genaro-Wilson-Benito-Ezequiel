@@ -15,6 +15,22 @@ class GenresView {
     }
 }
 
+class AddGenreView {
+
+    function showForm() {
+        require 'templates/layout/header.phtml';
+        echo "<h2>Añadir genero</h2>";
+        require 'templates/form_add_genero.phtml';
+        require 'templates/layout/footer.phtml';
+    }
+
+    function showError() {
+        require 'templates/layout/header.phtml';
+        echo "<h2>Error: Faltan datos</h2>";
+        require 'templates/layout/footer.phtml';
+    }
+}
+
 // PELICULAS
 
 class MoviesView {
@@ -25,6 +41,7 @@ class MoviesView {
         foreach($movies as $movie) {
             echo "<h1><a href='detalle/$movie->id'>$movie->nombre</a></a>";
         }
+        echo "<h3><a href=''>Volver atras</a></h3>";
 
         require 'templates/layout/footer.phtml';
     }
