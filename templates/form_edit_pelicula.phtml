@@ -1,0 +1,37 @@
+<form action="guardarEdit" method="POST" class="my-4">
+    <input type="hidden" name="id" value="<?= $movie->id ?>">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Título</label>
+                <input required name="nombre" type="text" class="form-control" value="<?= $movie->nombre ?>">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label>Director</label>
+                <input required name="director" type="text" class="form-control" value="<?= $movie->director ?>">
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group">
+                <label>Genero</label>
+                <select required name="genero" class="form-control">
+                    <?php foreach($genres as $genre): ?>
+                        <option value="<?= $genre->id ?>" <?= ($movie->genero == $genre->id) ? 'selected' : '' ?>><?= $genre->genero ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Descripcion</label>
+        <textarea name="descripcion" class="form-control" rows="3" required><?= $movie->descripcion ?></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+</form>

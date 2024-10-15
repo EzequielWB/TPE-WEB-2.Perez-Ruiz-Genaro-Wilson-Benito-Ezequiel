@@ -18,7 +18,6 @@ $params = explode('/',$action);
 $controllerGenres = new GenreController(); //llamo al controller de otro archivo
 $controllerMovie = new MovieController();
 $controllerAddMovie = new addMovieController();
-
 $userController = new AuthController();
 
 switch ($params[0]) {
@@ -52,10 +51,21 @@ switch ($params[0]) {
     case 'borrar':
         $controllerMovie->deleteMovie($params[1]);
     break;
+
+    case 'editar':
+        $movieId = $params[1]; 
+        $controllerMovie->showEdit($movieId);
+    break;
+
+    case 'guardarEdit':
+        $controllerMovie->saveEdit(); 
+    break;
+
     case 'showLogin':
         $controller = new AuthController();
         $controller->showLogin();
         break;
+
     case 'login':
         $controller = new AuthController();
         $controller->login();

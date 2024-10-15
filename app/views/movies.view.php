@@ -39,6 +39,7 @@ class MovieDetailsView{
         echo "<p>Director: $movie->director</p>";
         echo "<p>Descripcion: $movie->descripcion</p>";
         echo "<form action='borrar/$movie->id' method='POST'>";
+        echo "<a href='editar/$movie->id' class='btn btn-primary'>EDITAR</a>";
         echo "<button type='submit' class='btn btn-danger'>BORRAR</button>";
         echo "</form>";
 
