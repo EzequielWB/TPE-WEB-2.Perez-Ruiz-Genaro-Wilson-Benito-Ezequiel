@@ -1,13 +1,18 @@
 <?php
 
+require_once './config.php'; 
+require_once './app/models/DB.Model.php';
+
 class UserModel {
     private $db;
 
-    function __construct() {
-       $this->db = new PDO('mysql:host=localhost;dbname=catalogo_peliculas;charset=utf8', 'root', '');
+    function connect(){
+        $dbModel = new DBModel();
+        $this->db = $dbModel->db; 
     }
  
-    function getUser($usuario) {    
+    function getUser($usuario) {   
+        $this->connect(); 
         $query = $this->db->prepare("SELECT * FROM usuarios WHERE usuario = ?");
         $query->execute([$usuario]);
     
