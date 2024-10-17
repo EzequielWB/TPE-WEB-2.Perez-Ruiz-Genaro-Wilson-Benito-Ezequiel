@@ -24,11 +24,6 @@ class AddGenreView {
         require 'templates/layout/footer.phtml';
     }
 
-    function showError() {
-        require 'templates/layout/header.phtml';
-        echo "<h2>Error: Faltan datos</h2>";
-        require 'templates/layout/footer.phtml';
-    }
 }
 
 // PELICULAS
@@ -73,12 +68,6 @@ class addMovieView{
         require 'templates/layout/header.phtml';
         echo "<h2>Añadir película</h2>";
         require 'templates/form_add_pelicula.phtml';
-        require 'templates/layout/footer.phtml';
-    }
-
-    function showError() {
-        require 'templates/layout/header.phtml';
-        echo "<h2>Error: Faltan datos</h2>";
         require 'templates/layout/footer.phtml';
     }
 }

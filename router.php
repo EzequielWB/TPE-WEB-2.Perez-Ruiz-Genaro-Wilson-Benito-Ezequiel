@@ -46,12 +46,29 @@ switch ($params[0]) {
     break;
 
     case 'añadirGenero':
+        sessionAuthMiddleware($response);
         $controllerAddGenre->showAddGenreForm();
     break;
 
     case 'guardarGenero':
         $controllerAddGenre->saveGenre();
     break;
+
+    case 'editarGenero':
+        $genreId = $params[1];
+        $controllerGenres->showEditGenre($genreId);  // Muestra el formulario de edición
+        break;
+    
+    case 'guardarEditGenero':
+        $controllerGenres->saveEditGenre();  // Guarda los cambios del género
+        break;
+    
+    case 'borrarGenero':
+        if (sessionAuthMiddleware($response)) {
+            $genreId = $params[1];
+            $controllerGenres->deleteGenre($genreId);  // Borra el género
+        }
+        break;
 
     case 'añadir':
         sessionAuthMiddleware($response); //usando esto hacemos que sea necesario un login
@@ -85,5 +102,9 @@ switch ($params[0]) {
     case 'login':
         $userController->login();
         break; 
+    
+    case 'logout':
+        $userController->logout();
+        break;
 }
 ?>
