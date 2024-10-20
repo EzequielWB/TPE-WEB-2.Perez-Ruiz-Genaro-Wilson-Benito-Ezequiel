@@ -104,11 +104,12 @@ class AddMovieModel{
         $this->db = $dbModel->db; 
     }
 
-    function addMovie($nombre, $director, $descripcion, $genero) {
+    function addMovie($nombre, $director, $descripcion, $genero, $imagen) {
         $db = $this->connect();
 
-        $query = $this->db->prepare('INSERT INTO peliculas (nombre, director, descripcion, genero) VALUES (?, ?, ?, ?)');
-        $query->execute([$nombre, $director, $descripcion, $genero]);
+        // Inserta el path de la imagen en la base de datos junto con los demás datos
+        $query = $this->db->prepare('INSERT INTO peliculas (nombre, director, descripcion, genero, imagen) VALUES (?, ?, ?, ?, ?)');
+        $query->execute([$nombre, $director, $descripcion, $genero, $imagen]);
     }
 
 }
