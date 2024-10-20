@@ -24,19 +24,30 @@ class AddGenreView {
         require 'templates/layout/footer.phtml';
     }
 
+    function showEditForm($genre) {
+        require 'templates/layout/header.phtml';
+        echo "<h2>Editar genero</h2>";
+        require 'templates/form_edit_genero.phtml'; 
+        require 'templates/layout/footer.phtml';
+    }
 }
 
 // PELICULAS
 
 class MoviesView {
     
-    function listMovies($movies) {
+    function listMovies($movies, $genreId) { //dos id para poder hacer lo de generos
         require 'templates/layout/header.phtml';
 
         foreach($movies as $movie) {
             echo "<h1><a href='detalle/$movie->id'>$movie->nombre</a></a>";
         }
-        echo "<h3><a href=''>Volver atras</a></h3>";
+
+        echo "<h3><a href=''>Volver atrás</a></h3>";
+
+        echo "<h3><a href='editarGenero/$genreId'>Editar genero</a></h3>";
+
+        echo "<h3><a href='borrarGenero/$genreId'>Borrar genero</a></h3>";
 
         require 'templates/layout/footer.phtml';
     }

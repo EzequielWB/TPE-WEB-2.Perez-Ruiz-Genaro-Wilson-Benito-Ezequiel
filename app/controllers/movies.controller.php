@@ -21,6 +21,13 @@ class GenreController {
 
         $this->view->listGenres($genres);//Actualizo vista
     }
+
+    function deleteGenre($genreId) {
+        $this->model->deleteGenre($genreId); 
+        header('Location: ' . BASE_URL . 'principal'); 
+    }
+
+    
 }
 
 class AddGenreController {
@@ -43,7 +50,20 @@ class AddGenreController {
 
         header('Location: ' . BASE_URL . 'principal');
     }
-}
+
+    function editGenre($genreId) {
+        $genre = $this->model->getGenreById($genreId); 
+        $this->view->showEditForm($genre); 
+    }
+
+    function updateGenre() {
+        $id = $_POST['id']; // el id viene del form
+        $nombre = $_POST['genero'];
+        $this->model->updateGenre($id, $nombre);
+        header('Location: ' . BASE_URL . 'principal');
+    }
+    }
+
 
 //PELICULA
 
@@ -59,10 +79,9 @@ class MovieController {
         $this->details = new MovieDetailsView();
     }
 
-    function showMoviesByGenre($genreId){
-
-        $movies = $this->model->getMoviesByGenre($genreId); //entramos a model
-        $this->view->listMovies($movies);//Actualizo vista
+    function showMoviesByGenre($genreId) {
+        $movies = $this->model->getMoviesByGenre($genreId); // peliculas por genero
+        $this->view->listMovies($movies, $genreId); // pasamos peliculas y genero
     }
 
     function showMovieDetails($movieId) {

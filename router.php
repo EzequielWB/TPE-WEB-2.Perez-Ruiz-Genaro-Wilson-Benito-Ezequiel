@@ -9,7 +9,7 @@ define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] 
 
 $response = new Response();
 
-// Obtener acción desde la URL (por defecto 'genre')
+// Obtener accion desde la URL (por defecto 'genre')
 $action = 'principal';
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
@@ -49,26 +49,27 @@ switch ($params[0]) {
         sessionAuthMiddleware($response);
         $controllerAddGenre->showAddGenreForm();
     break;
+    
+    case 'borrarGenero':
+        if (sessionAuthMiddleware($response)) {
+            $genreId = $params[1];  
+            $controllerGenres->deleteGenre($genreId); 
+        }
+    break;
+
+    case 'editarGenero':
+        sessionAuthMiddleware($response);
+        $genreId = $params[1]; 
+        $controllerAddGenre->editGenre($genreId); 
+    break;
+    
+    case 'guardarEditGenero':
+            $controllerAddGenre->updateGenre();
+    break;
 
     case 'guardarGenero':
         $controllerAddGenre->saveGenre();
     break;
-
-    case 'editarGenero':
-        $genreId = $params[1];
-        $controllerGenres->showEditGenre($genreId);  // Muestra el formulario de edición
-        break;
-    
-    case 'guardarEditGenero':
-        $controllerGenres->saveEditGenre();  // Guarda los cambios del género
-        break;
-    
-    case 'borrarGenero':
-        if (sessionAuthMiddleware($response)) {
-            $genreId = $params[1];
-            $controllerGenres->deleteGenre($genreId);  // Borra el género
-        }
-        break;
 
     case 'añadir':
         sessionAuthMiddleware($response); //usando esto hacemos que sea necesario un login

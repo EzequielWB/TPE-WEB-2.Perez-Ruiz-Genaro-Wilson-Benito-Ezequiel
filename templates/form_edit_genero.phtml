@@ -1,0 +1,12 @@
+<form action="guardarEditGenero" method="POST" class="my-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label>Editar genero</label>
+                <input required name="genero" type="text" class="form-control">
+                <input type="hidden" name="id" value="<?= isset($genre) ? $genre->id : '' ?>">
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+</form>

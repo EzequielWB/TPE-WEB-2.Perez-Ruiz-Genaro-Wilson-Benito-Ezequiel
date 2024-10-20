@@ -19,12 +19,33 @@ class GenresModel {
 
         $db = $this->connect(); //conexion (this para llamar a funcion connect) //VER
 
-        $query = $this->db->prepare('SELECT * FROM generos');
-        $query->execute();
+        $query = $this->db->prepare('SELECT * FROM generos'); //preparamos desde la base de datos
+        $query->execute(); //y ejecutamos la seleccion
 
-        $genres = $query->fetchAll(PDO::FETCH_OBJ);
+        $genres = $query->fetchAll(PDO::FETCH_OBJ); //retorna como objeto
 
         return $genres; //esto se pasa al view
+    }
+
+    public function deleteGenre($genreId) {
+        $db = $this->connect();
+        $query = $this->db->prepare('DELETE FROM peliculas WHERE genero = ?'); //primero borramos peliculas
+        $query->execute([$genreId]);
+        $query = $this->db->prepare('DELETE FROM generos WHERE id = ?');
+        $query->execute([$genreId]);
+    }
+
+    function addGenre($nombre) {
+        $db = $this->connect();
+        $query = $this->db->prepare('INSERT INTO generos (genero) VALUES (?)');
+        $query->execute([$nombre]);
+    }
+
+    // Nueva función para actualizar un género
+    function updateGenre($id, $nombre) {
+        $db = $this->connect();
+        $query = $this->db->prepare('UPDATE generos SET genero = ? WHERE id = ?');
+        $query->execute([$nombre, $id]);
     }
 }
 
@@ -105,6 +126,19 @@ class AddGenreModel {
         $db = $this->connect();
         $query = $this->db->prepare('INSERT INTO generos (genero) VALUES (?)');
         $query->execute([$nombre]);
+    }
+
+    function getGenreById($id) {
+        $db = $this->connect();
+        $query = $this->db->prepare('SELECT * FROM generos WHERE id = ?');
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_OBJ); 
+    }
+
+    function updateGenre($id, $nombre) {
+        $db = $this->connect();
+        $query = $this->db->prepare('UPDATE generos SET genero = ? WHERE id = ?');
+        $query->execute([$nombre, $id]);
     }
 
 }
