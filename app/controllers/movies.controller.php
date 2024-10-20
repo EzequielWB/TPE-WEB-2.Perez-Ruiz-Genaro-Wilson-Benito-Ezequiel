@@ -136,14 +136,33 @@ class addMovieController {
         $this->view->addMovieVisual($genres); // Pasa los generos a la vista
     }
 
-    function addMovieControl() { // FUNCTION ES METODO
-
+    function addMovieControl() { 
+        // Recoge los datos del formulario
         $nombre = $_POST['nombre'];
         $director = $_POST['director'];
         $descripcion = $_POST['descripcion'];
         $genero = $_POST['genero'];
 
-        $id = $this->model->addMovie($nombre, $director, $descripcion, $genero);
+        // Manejar la imagen subida
+        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+            $imagen = $_FILES['imagen'];
+            
+            // Verificar el tipo de archivo
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (in_array($imagen['type'], $allowedTypes)) {
+                // Mover el archivo a la carpeta de imágenes en tu servidor
+                $uploadDir = 'uploads/'; // Asegúrate de que esta carpeta exista y tenga permisos de escritura
+                $filePath = $uploadDir . basename($imagen['name']);
+                if (move_uploaded_file($imagen['tmp_name'], $filePath)) {
+                    // Subida exitosa, ahora puedes almacenar el path en la base de datos
+                    $this->model->addMovie($nombre, $director, $descripcion, $genero, $filePath);
+                } else {
+                    echo "Error al subir la imagen.";
+                }
+            } else {
+                echo "Formato de archivo no permitido.";
+            }
+        }
 
         header('Location: ' . BASE_URL . 'principal');
     }
