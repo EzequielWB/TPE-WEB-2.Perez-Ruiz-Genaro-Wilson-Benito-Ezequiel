@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 require_once './app/models/user.model.php';
 require_once './app/views/auth.view.php';

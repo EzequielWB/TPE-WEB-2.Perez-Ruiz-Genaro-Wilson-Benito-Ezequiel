@@ -55,14 +55,19 @@ class MoviesView {
 
 class MovieDetailsView{
 
-    function listDetails($movie){
+    function listDetails($movie) {
         require 'templates/layout/header.phtml';
 
-        echo "<h2>$movie->nombre</h2>";
-        echo "<p>Director: $movie->director</p>";
-        echo "<p>Descripcion: $movie->descripcion</p>";
-        echo "<form action='borrar/$movie->id' method='POST'>";
-        echo "<a href='editar/$movie->id' class='btn btn-primary'>EDITAR</a>";
+        echo "<h2>{$movie->nombre}</h2>";
+        echo "<p>Director: {$movie->director}</p>";
+        echo "<p>Descripcion: {$movie->descripcion}</p>";
+
+        if (!empty($movie->imagen)) {
+            echo "<img src='$movie->imagen' style='max-width:500px;'>";
+        }
+
+        echo "<form action='borrar/{$movie->id}' method='POST'>";
+        echo "<a href='editar/{$movie->id}' class='btn btn-primary'>EDITAR</a>";
         echo "<button type='submit' class='btn btn-danger'>BORRAR</button>";
         echo "</form>";
 
