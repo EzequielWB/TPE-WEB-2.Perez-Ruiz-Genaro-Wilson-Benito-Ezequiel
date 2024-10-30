@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 require_once './app/models/user.model.php';
 require_once './app/views/auth.view.php';
@@ -19,7 +19,7 @@ class AuthController {
 
     function login() {
         if (!isset($_POST['usuario']) || empty($_POST['usuario'])) { //comprueba que haya user
-            return $this->view->showLogin('Falta completar el nombre de usuario'); //igual es innecesario porque el mismo boton te salta la advertencia
+            return $this->viegw->showLogin('Falta completar el nombre de usuario'); //igual es innecesario porque el mismo boton te salta la advertencia
         }
     
         if (!isset($_POST['password']) || empty($_POST['password'])) {
